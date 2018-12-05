@@ -1,7 +1,4 @@
-import Paddle from "./paddle";
-import InputHandler from "./input";
-import Ball from "./ball";
-
+import Game from "./game";
 const canvas = document.querySelector("#gameScreen");
 const ctx = canvas.getContext("2d");
 
@@ -10,10 +7,10 @@ const GAME_HEIGHT = 600;
 
 ctx.clearRect(0, 0, 800, 600);
 
-const paddle = new Paddle(GAME_WIDTH, GAME_HEIGHT);
-const input = new InputHandler(paddle);
-const ball = new Ball(GAME_WIDTH, GAME_HEIGHT);
-paddle.draw(ctx);
+const game = new Game(GAME_WIDTH, GAME_HEIGHT);
+
+game.start();
+
 let lastTime = 0;
 
 const gameLoop = timestamp => {
@@ -22,11 +19,8 @@ const gameLoop = timestamp => {
 
   ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-  paddle.update(deltaTime);
-  paddle.draw(ctx);
-
-  ball.update(deltaTime);
-  ball.draw(ctx);
+  game.update(deltaTime);
+  game.draw(ctx);
 
   requestAnimationFrame(gameLoop);
 };
