@@ -8,6 +8,11 @@ export default class Ball {
     this.game = game;
 
     this.image = document.querySelector("#img_ball");
+
+    this.size = 16;
+    this.reset();
+  }
+  reset() {
     this.speed = {
       x: 4,
       y: -2
@@ -17,8 +22,6 @@ export default class Ball {
       x: 10,
       y: 400
     };
-
-    this.size = 16;
   }
   draw(ctx) {
     ctx.drawImage(
@@ -38,11 +41,14 @@ export default class Ball {
       this.speed.x = -this.speed.x;
     }
 
-    // checking collition with top and bottom
-    if (this.position.y + this.size > this.gameHeight || this.position.y < 0) {
+    // checking collition with top
+    if (this.position.y < 0) {
       this.speed.y = -this.speed.y;
     }
-
+    if (this.position.y + this.size > this.gameHeight) {
+      this.game.lives--;
+      this.reset();
+    }
     // checking collision with paddle
     if (detectCollision(this, this.game.paddle)) {
       this.speed.y = -this.speed.y;
